@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator</title>
+  <link rel="icon" type="image/png" href="./icon.png">
+  <!-- CSS -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+    
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s;
+      max-width: 400px;
+      width: 100%;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    .input-group input[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    .result {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    
+    .result span {
+      color: #4caf50;
+    }
+
+    .underweight {
+      color: #ff9800;
+    }
+    
+    .overweight {
+      color: #f44336;
+    }
+  </style>
+</head>
+<!-- Html -->
+<body>
+  <div class="container">
+    <h1>BMI Calculator</h1>
+    <div class="input-group">
+      <label for="weight">Weight (kg):</label>
+      <input type="number" id="weight" placeholder="Enter your weight">
+    </div>
+    <div class="input-group">
+      <label for="height">Height (cm):</label>
+      <input type="number" id="height" placeholder="Enter your height">
+    </div>
+    <div class="input-group">
+      <input type="submit" value="Calculate" onclick="calculateBMI()">
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+  <!-- Javascript -->
+  <script>
+    function calculateBMI() {
+      var weightInput = document.getElementById('weight');
+      var heightInput = document.getElementById('height');
+      var resultElement = document.getElementById('result');
+      
+      var weight = parseFloat(weightInput.value);
+      var height = parseFloat(heightInput.value) / 100; // Convert height to meters
+
+      if (isNaN(weight) || isNaN(height)) {
+        resultElement.innerHTML = '<span>Please enter valid values.</span>';
+      } else {
+        var bmi = weight / (height * height);
+        var bmiCategory = '';
+
+        if (bmi < 18.5) {
+          bmiCategory = 'Underweight';
+          resultElement.classList.add('underweight');
+        } else if (bmi >= 18.5 && bmi < 25) {
+          bmiCategory = 'Normal weight';
+          resultElement.classList.remove('underweight', 'overweight');
+        } else {
+          bmiCategory = 'Overweight';
+          resultElement.classList.add('overweight');
+        }
+
+        resultElement.innerHTML = 'Your BMI: <span>' + bmi.toFixed(2) + '</span><br>Category: <span>' + bmiCategory + '</span>';
+      }
+    }
+  </script>
+</body>
+</html>
